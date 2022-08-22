@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<title>お一人様コンソーシアム</title>
+	<style>
+		@font-face {
+			font-family: 'cirlipa';
+			src: url('cirlxarli_liparxe_1.woff') format('woff');
+		}
+
+		@font-face {
+			font-family: 'pek_tak';
+			src: url('pek_tak.woff') format('woff');
+		}
+
+		@font-face {
+			font-family: 'lin-marn-bitmap';
+			src: url('lin-marn-bitmap-font.woff') format('woff');
+		}
+
+		td {
+			padding: 2px;
+			text-align: center;
+		}
+
+		.theme-identity {
+			background-color: rgb(187, 187, 187);
+			font-family: serif
+		}
+
+		.theme-duvuv {
+			background-color: rgb(248, 205, 126);
+		}
+
+		.theme-cirlipa {
+			background-color: rgb(169, 186, 254);
+		}
+
+		.theme-pektak {
+			background-color: rgb(248, 158, 158);
+		}
+
+		.theme-lin-marn-bitmap {
+			background-color: rgb(216, 236, 180);
+		}
+	</style>
+</head>
+<h1>お一人様コンソーシアム</h1>
+<table>
+	<thead>
+		<tr>
+			<td class="theme-duvuv" colspan="3">duvuv転写</td>
+			<td class="theme-identity">字の実態</td>
+			<td class="theme-cirlipa" colspan="2">cirlipa</td>
+			<td class="theme-pektak" colspan="2">pektak</td>
+			<td class="theme-lin-marn-bitmap" colspan="2">lin-marn-bitmap</td>
+		</tr>
+	</thead>
+	<tbody id="foo"></tbody>
+</table>
+<script>
+	function from_cjk(c) {
+		let hex = c.codePointAt(0).toString(16).toUpperCase();
+		return [`U+${hex}`, `CJK UNIFIED IDEOGRAPH-${hex}`];
+	}
+	var obj = [
+		{ identity: "空白", duvuv: ["U+0020", "SPACE"], cirlipa: " " },
+		{ identity: "リパーシェ感嘆符", duvuv: ["U+0021", "EXCLAMATION MARK"], cirlipa: "!" },
+		{ identity: "台詞引用符\n(flandzoven xefdo)", duvuv: ["U+0022", "QUOTATION MARK"], cirlipa: "\"" },
+		{ identity: "レジュ記号", duvuv: ["U+0024", "DOLLAR SIGN"], cirlipa: "$" },
+		{ identity: "la の合字", duvuv: ["U+0026", "AMPERSAND"], cirlipa: "&" },
+		{ identity: "伝統アポストロフィ", duvuv: ["U+0027", "APOSTROPHE"], cirlipa: "'" },
+		{ identity: "丸括弧左", duvuv: ["U+0028", "LEFT PARENTHESIS"], cirlipa: "(" },
+		{ identity: "丸括弧右", duvuv: ["U+0029", "RIGHT PARENTHESIS"], cirlipa: ")" },
+		{ identity: "正数記号", duvuv: ["U+002b", "PLUS SIGN"], cirlipa: "+" },
+		{ identity: "カンマ", duvuv: ["U+002c", "COMMA"], cirlipa: ",", pektak: ";" },
+		{ identity: "ハイフン", duvuv: ["U+002d", "HYPHEN-MINUS"], cirlipa: "-", linmarn_bitmap: "-" },
+		{ identity: "ピリオド", duvuv: ["U+002e", "FULL STOP"], cirlipa: ".", pektak: ":" },
+		{ identity: "ユーゴック数字0", duvuv: ["U+0030", "DIGIT ZERO"], cirlipa: "0" },
+		{ identity: "ユーゴック数字1", duvuv: ["U+0031", "DIGIT ONE"], cirlipa: "1" },
+		{ identity: "ユーゴック数字2", duvuv: ["U+0032", "DIGIT TWO"], cirlipa: "2" },
+		{ identity: "ユーゴック数字3", duvuv: ["U+0033", "DIGIT THREE"], cirlipa: "3" },
+		{ identity: "ユーゴック数字4", duvuv: ["U+0034", "DIGIT FOUR"], cirlipa: "4" },
+		{ identity: "ユーゴック数字5", duvuv: ["U+0035", "DIGIT FIVE"], cirlipa: "5" },
+		{ identity: "ユーゴック数字6", duvuv: ["U+0036", "DIGIT SIX"], cirlipa: "6" },
+		{ identity: "ユーゴック数字7", duvuv: ["U+0037", "DIGIT SEVEN"], cirlipa: "7" },
+		{ identity: "ユーゴック数字8", duvuv: ["U+0038", "DIGIT EIGHT"], cirlipa: "8" },
+		{ identity: "ユーゴック数字9", duvuv: ["U+0039", "DIGIT NINE"], cirlipa: "9" },
+		{ identity: "コロン\n(kadlarl)", duvuv: ["U+003a", "COLON"], cirlipa: ":", linmarn_bitmap: ":" },
+		{ identity: "山引用符左\n(licxaven xefdo)", duvuv: ["U+003c", "LESS-THAN SIGN"] },
+		{ identity: "等号", duvuv: ["U+003d", "EQUALS SIGN"], cirlipa: "=" },
+		{ identity: "山引用符右\n(licxaven xefdo)", duvuv: ["U+003e", "GREATER-THAN SIGN"] },
+		{ identity: "疑問符", duvuv: ["U+003f", "QUESTION MARK"], cirlipa: "?" },
+		{ identity: "io の合字", duvuv: ["U+0040", "COMMERCIAL AT"], cirlipa: "@" },
+		{ identity: "角括弧左", duvuv: ["U+005b", "LEFT SQUARE BRACKET"], cirlipa: "[", linmarn_bitmap: "[" },
+		{ identity: "ズー記号", duvuv: ["U+005c", "REVERSE SOLIDUS"], cirlipa: "\\" },
+		{ identity: "角括弧右", duvuv: ["U+005d", "RIGHT SQUARE BRACKET"], cirlipa: "]", linmarn_bitmap: "]" },
+		{ identity: "下線", duvuv: ["U+005f", "LOW LINE"], cirlipa: "_" },
+		{ identity: "リパーシェ a", duvuv: ["U+0061", "LATIN SMALL LETTER A"], cirlipa: "a", pektak: "A", linmarn_bitmap: "A" },
+		{ identity: "リパーシェ b", duvuv: ["U+0062", "LATIN SMALL LETTER B"], cirlipa: "b", pektak: "B", linmarn_bitmap: "B" },
+		{ identity: "リパーシェ c", duvuv: ["U+0063", "LATIN SMALL LETTER C"], cirlipa: "c" },
+		{ identity: "リパーシェ d", duvuv: ["U+0064", "LATIN SMALL LETTER D"], cirlipa: "d", linmarn_bitmap: "D" },
+		{ identity: "リパーシェ e", duvuv: ["U+0065", "LATIN SMALL LETTER E"], cirlipa: "e", pektak: "E", linmarn_bitmap: "E" },
+		{ identity: "リパーシェ f", duvuv: ["U+0066", "LATIN SMALL LETTER F"], cirlipa: "f" },
+		{ identity: "リパーシェ g", duvuv: ["U+0067", "LATIN SMALL LETTER G"], cirlipa: "g" },
+		{ identity: "リパーシェ h", duvuv: ["U+0068", "LATIN SMALL LETTER H"], cirlipa: "h" },
+		{ identity: "リパーシェ i", duvuv: ["U+0069", "LATIN SMALL LETTER I"], cirlipa: "i", pektak: "I", linmarn_bitmap: "I" },
+		{ identity: "リパーシェ j", duvuv: ["U+006a", "LATIN SMALL LETTER J"], cirlipa: "j", pektak: "J", linmarn_bitmap: "J" },
+		{ identity: "リパーシェ k", duvuv: ["U+006b", "LATIN SMALL LETTER K"], cirlipa: "k" },
+		{ identity: "リパーシェ l", duvuv: ["U+006c", "LATIN SMALL LETTER L"], cirlipa: "l", pektak: "L", linmarn_bitmap: "L" },
+		{ identity: "リパーシェ m", duvuv: ["U+006d", "LATIN SMALL LETTER M"], cirlipa: "m", pektak: "M", linmarn_bitmap: "M" },
+		{ identity: "リパーシェ n", duvuv: ["U+006e", "LATIN SMALL LETTER N"], cirlipa: "n", pektak: "N", linmarn_bitmap: "N" },
+		{ identity: "リパーシェ o", duvuv: ["U+006f", "LATIN SMALL LETTER O"], cirlipa: "o", pektak: "O", linmarn_bitmap: "O" },
+		{ identity: "リパーシェ p", duvuv: ["U+0070", "LATIN SMALL LETTER P"], cirlipa: "p", pektak: "P", linmarn_bitmap: "P" },
+		{ identity: "リパーシェ q", duvuv: ["U+0071", "LATIN SMALL LETTER Q"], cirlipa: "q" },
+		{ identity: "リパーシェ r\n(hrlichen rer)", duvuv: ["U+0072", "LATIN SMALL LETTER R"], cirlipa: "r" },
+		{ identity: "リパーシェ s", duvuv: ["U+0073", "LATIN SMALL LETTER S"], cirlipa: "s", pektak: "C", linmarn_bitmap: "C" },
+		{ identity: "リパーシェ t", duvuv: ["U+0074", "LATIN SMALL LETTER T"], cirlipa: "t", pektak: "T", linmarn_bitmap: "T" },
+		{ identity: "リパーシェ u", duvuv: ["U+0075", "LATIN SMALL LETTER U"], cirlipa: "u", pektak: "U", linmarn_bitmap: "U" },
+		{ identity: "リパーシェ v", duvuv: ["U+0076", "LATIN SMALL LETTER V"], cirlipa: "v" },
+		{ identity: "リパーシェ w", duvuv: ["U+0077", "LATIN SMALL LETTER W"], cirlipa: "w", pektak: "W", linmarn_bitmap: "W" },
+		{ identity: "リパーシェ x", duvuv: ["U+0078", "LATIN SMALL LETTER X"], cirlipa: "x" },
+		{ identity: "リパーシェ y", duvuv: ["U+0079", "LATIN SMALL LETTER Y"], cirlipa: "y", linmarn_bitmap: "Y" },
+		{ identity: "リパーシェ z", duvuv: ["U+007a", "LATIN SMALL LETTER Z"], cirlipa: "z" },
+		{ identity: "装飾カッコ左", duvuv: ["U+007b", "LEFT CURLY BRACKET"], linmarn_bitmap: "{" },
+		{ identity: "装飾カッコ右", duvuv: ["U+007d", "RIGHT CURLY BRACKET"], linmarn_bitmap: "}" },
+		{ identity: "リパーシェ vh", duvuv: ["U+03B2", "GREEK SMALL LETTER BETA"], cirlipa: "V" },
+		{ identity: "リパーシェ fh", duvuv: ["U+03C6", "GREEK SMALL LETTER PHI"], cirlipa: "F" },
+		{ identity: "PMCF d", duvuv: ["U+0434", "CYRILLIC SMALL LETTER DE"], pektak: "D" },
+		{ identity: "リパーシェ dz", duvuv: ["U+0436", "CYRILLIC SMALL LETTER ZHE"], cirlipa: "X" },
+		{ identity: "PMCF k", duvuv: ["U+043A", "CYRILLIC SMALL LETTER KA"], pektak: "K", linmarn_bitmap: "K" },
+		{ identity: "PMCF z", duvuv: ["U+0446", "CYRILLIC SMALL LETTER TSE"], pektak: "Z", linmarn_bitmap: "Z" },
+		{ identity: "PMCF x", duvuv: ["U+0448", "CYRILLIC SMALL LETTER SHA"], pektak: "X" , linmarn_bitmap: "X"},
+		{ identity: "燐字【上】", duvuv: from_cjk("上"), pektak: "+", linmarn_bitmap: "上"},
+		{ identity: "燐字【下】", duvuv: from_cjk("下"), pektak: "-", linmarn_bitmap: "下"},
+		{ identity: "燐字【銭】", duvuv: from_cjk("銭"), pektak: "$", linmarn_bitmap: "銭"},
+		
+		{ identity: "燐字【船】", duvuv: from_cjk("船"), pektak: "船", linmarn_bitmap: "船"},
+		{ identity: "燐字【兵】", duvuv: from_cjk("兵"), pektak: "兵", linmarn_bitmap: "兵"},
+		{ identity: "燐字【弓】", duvuv: from_cjk("弓"), pektak: "弓", linmarn_bitmap: "弓"},
+		{ identity: "燐字【車】", duvuv: from_cjk("車"), pektak: "車", linmarn_bitmap: "車"},
+		{ identity: "燐字【虎】", duvuv: from_cjk("虎"), pektak: "虎", linmarn_bitmap: "虎"},
+		{ identity: "燐字【馬】", duvuv: from_cjk("馬"), pektak: "馬", linmarn_bitmap: "馬"},
+		{ identity: "燐字【筆】", duvuv: from_cjk("筆"), pektak: "筆", linmarn_bitmap: "筆"},
+		{ identity: "燐字【巫】", duvuv: from_cjk("巫"), pektak: "巫", linmarn_bitmap: "巫"},
+		{ identity: "燐字【将】", duvuv: from_cjk("将"), pektak: "将", linmarn_bitmap: "将"},
+		{ identity: "燐字【王】", duvuv: from_cjk("王"), pektak: "王", linmarn_bitmap: "王"},
+		
+		{ identity: "燐字【無】", duvuv: from_cjk("無"), pektak: "0", linmarn_bitmap: "無"},
+		{ identity: "燐字【無】", duvuv: from_cjk("無"), pektak: "無"},
+		{ identity: "燐字【一】", duvuv: from_cjk("一"), pektak: "1", linmarn_bitmap: "一"},
+		{ identity: "燐字【二】", duvuv: from_cjk("二"), pektak: "2", linmarn_bitmap: "二"},
+		{ identity: "燐字【三】", duvuv: from_cjk("三"), pektak: "3", linmarn_bitmap: "三"},
+		{ identity: "燐字【四】", duvuv: from_cjk("四"), pektak: "4", linmarn_bitmap: "四"},
+		{ identity: "燐字【五】", duvuv: from_cjk("五"), pektak: "5", linmarn_bitmap: "五"},
+		{ identity: "燐字【六】", duvuv: from_cjk("六"), pektak: "6", linmarn_bitmap: "六"},
+		{ identity: "燐字【七】", duvuv: from_cjk("七"), pektak: "7", linmarn_bitmap: "七"},
+		{ identity: "燐字【八】", duvuv: from_cjk("八"), pektak: "8", linmarn_bitmap: "八"},
+		{ identity: "燐字【九】", duvuv: from_cjk("九"), pektak: "9", linmarn_bitmap: "九"},
+
+	];
+
+	obj.sort((a, b) => a.duvuv[0] < b.duvuv[0] ? -1 : a.duvuv[0] > b.duvuv[0] ? 1 : 0);
+
+	for (let i = 0; i < obj.length; i++) {
+		document.getElementById("foo").innerHTML +=
+			`<tr>
+				<td class="theme-duvuv">${obj[i].duvuv[1]}</td>
+				<td class="theme-duvuv">${obj[i].duvuv[0]}</td>
+				<td class="theme-duvuv" style="font-weight: bold">${String.fromCodePoint(parseInt(obj[i].duvuv[0].slice(2), 16))}</td>
+				<td class="theme-identity">${obj[i].identity.replace(/\n/g, "<br>")}</td>
+				<td class="theme-cirlipa" style="font-weight: bold">${obj[i].cirlipa ?? ""}</td>
+				<td class="theme-cirlipa" style="font-family: cirlipa; font-size: 300%">${obj[i].cirlipa ?? ""}</td>
+				<td class="theme-pektak" style="font-weight: bold">${obj[i].pektak ?? ""}</td>
+				<td class="theme-pektak" style="font-family: pek_tak; font-size: 300%">${obj[i].pektak ?? ""}</td>
+				<td class="theme-lin-marn-bitmap" style="font-weight: bold">${obj[i].linmarn_bitmap ?? ""}</td>
+				<td class="theme-lin-marn-bitmap" style="font-family: lin-marn-bitmap; font-size: 300%">${obj[i].linmarn_bitmap ?? ""}</td>
+		</tr>`;
+	}
+
+
+</script>
+
+</html>
