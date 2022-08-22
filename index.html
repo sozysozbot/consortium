@@ -166,8 +166,19 @@
 
 		{ identity: "燐字【皇】", duvuv: from_cjk("皇"), pektak: "_", linmarn_bitmap: "皇" },
 
+		{ identity: "燐数字0（半角）", duvuv: ["U+3007", "IDEOGRAPHIC NUMBER ZERO"], linmarn_bitmap: "0"},
+		{ identity: "燐数字1（半角）", duvuv: ["U+3021", "HANGZHOU NUMERAL ONE"], linmarn_bitmap: "1"},
+		{ identity: "燐数字2（半角）", duvuv: ["U+3022", "HANGZHOU NUMERAL TWO"], linmarn_bitmap: "2"},
+		{ identity: "燐数字3（半角）", duvuv: ["U+3023", "HANGZHOU NUMERAL THREE"], linmarn_bitmap: "3"},
+		{ identity: "燐数字4（半角）", duvuv: ["U+3024", "HANGZHOU NUMERAL FOUR"], linmarn_bitmap: "4"},
+		{ identity: "燐数字5（半角）", duvuv: ["U+3025", "HANGZHOU NUMERAL FIVE"], linmarn_bitmap: "5"},
+		{ identity: "燐数字6（半角）", duvuv: ["U+3026", "HANGZHOU NUMERAL SIX"], linmarn_bitmap: "6"},
+		{ identity: "燐数字7（半角）", duvuv: ["U+3027", "HANGZHOU NUMERAL SEVEN"], linmarn_bitmap: "7"},
+		{ identity: "燐数字8（半角）", duvuv: ["U+3028", "HANGZHOU NUMERAL EIGHT"], linmarn_bitmap: "8"},
+		{ identity: "燐数字9（半角）", duvuv: ["U+3029", "HANGZHOU NUMERAL NINE"], linmarn_bitmap: "9"},
+		
 		{ identity: "燐字圏二重引用符", duvuv: ["U+FF02", "FULLWIDTH QUOTATION MARK"], pektak: "\"" },
-		{ identity: "<span style='color: red'>なんだっけこれ</span>", duvuv: from_cjk("ｱ"), pektak: "'" },
+		{ identity: "燐字圏繰り返し記号", duvuv: ["U+3005", "IDEOGRAPHIC ITERATION MARK"], pektak: "'" },
 		{ identity: "燐字圏句読点", duvuv: ["U+3002", "IDEOGRAPHIC FULL STOP"], pektak: ",." },
 		{ identity: "燐字圏疑問符", duvuv: ["U+FF1F", "FULLWIDTH QUESTION MARK"], pektak: "?" },
 		{ identity: "単立パイグ文字a", duvuv: ["U+FF41", "FULLWIDTH LATIN SMALL LETTER A"], pektak: "a" },
@@ -277,11 +288,11 @@
 				<td class="theme-duvuv" style="font-weight: bold">${String.fromCodePoint(parseInt(obj[i].duvuv[0].slice(2), 16))}</td>
 				<td class="theme-identity">${obj[i].identity.replace(/\n/g, "<br>")}</td>
 				<td class="theme-cirlipa" style="font-weight: bold">${obj[i].cirlipa ?? ""}</td>
-				<td class="theme-cirlipa" style="font-family: cirlipa; font-size: 300%">${obj[i].cirlipa ?? ""}</td>
+				<td class="theme-cirlipa" style="font-family: cirlipa; font-size: 300%"><span style="background-color: white">${obj[i].cirlipa ?? ""}</span></td>
 				<td class="theme-pektak" style="font-weight: bold">${(obj[i].pektak ?? "").split("").join("<br>")}</td>
-				<td class="theme-pektak" style="font-family: pek_tak; font-size: 300%">${(obj[i].pektak ?? "").split("").join("<br>")}</td>
+				<td class="theme-pektak" style="font-family: pek_tak; font-size: 300%"><span style="background-color: white">${(obj[i].pektak ?? "").split("").join("<br>")}</span></td>
 				<td class="theme-lin-marn-bitmap" style="font-weight: bold">${obj[i].linmarn_bitmap ?? ""}</td>
-				<td class="theme-lin-marn-bitmap" style="font-family: lin-marn-bitmap; font-size: 300%">${obj[i].linmarn_bitmap ?? ""}</td>
+				<td class="theme-lin-marn-bitmap" style="font-family: lin-marn-bitmap; font-size: 300%"><span style="background-color: white">${obj[i].linmarn_bitmap ?? ""}</span></td>
 		</tr>`;
 	}
 
