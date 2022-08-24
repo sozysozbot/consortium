@@ -325,6 +325,21 @@
 		from_bhat("भ", "bh", "BHA"),
 		from_bhat("म", "m", "MA"), 
 		from_bhat("व", "w", "VA"), 
+		{ identity: "バート文字 aut", duvuv:["U+0994", "BENGALI LETTER AU"], bhat_bitmap:"aut"},
+		{ identity: "バート文字 at", duvuv:["U+0985", "BENGALI LETTER A"], bhat_bitmap:"at"},
+		{ identity: "バート文字 it", duvuv:["U+0987", "BENGALI LETTER I"], bhat_bitmap:"it"},
+		{ identity: "バート文字 ut", duvuv:["U+0989", "BENGALI LETTER U"], bhat_bitmap:"ut"},
+		{ identity: "バート文字ピリオド", duvuv:["U+0965", "DEVANAGARI DOUBLE DANDA"], bhat_bitmap:"period"},
+		{ identity: "バート文字コンマ", duvuv:["U+0964", "DEVANAGARI DANDA"], bhat_bitmap:","},
+		{ identity: "バート文字疑問符", duvuv:["U+2E2E", "REVERSED QUESTION MARK"], bhat_bitmap:"question"}, 
+		{ identity: "バート文字引用符", duvuv:["U+201E", "DOUBLE LOW-9 QUOTATION MARK"], bhat_bitmap:"quote"},
+		{ identity: "バート文字疑問引用符", duvuv:["U+2047", "DOUBLE QUESTION MARK"], bhat_bitmap:"ququ"},
+		{ identity: "バート文字トレデュニオン", duvuv:["U+203E", "OVERLINE"], bhat_bitmap:"_"},
+		{ identity: "バート文字ハラント", duvuv:["U+094D", "DEVANAGARI SIGN VIRAMA"], bhat_bitmap:"-"},
+		{ identity: "バート文字段落記号", duvuv:["U+10FB", "GEORGIAN PARAGRAPH SEPARATOR"], bhat_bitmap:"paragraph"},
+		{ identity: "バート文字二重引用符", duvuv:["U+2836", "BRAILLE PATTERN DOTS-2356"], bhat_bitmap:"2quot"},
+		{ identity: "バート文字三重引用符", duvuv:["U+283F", "BRAILLE PATTERN DOTS-123456"], bhat_bitmap:"3quot"},
+		 
 	];
 
 	obj.sort((a, b) => a.duvuv[0] < b.duvuv[0] ? -1 : a.duvuv[0] > b.duvuv[0] ? 1 : 0);
