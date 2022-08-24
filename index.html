@@ -45,6 +45,10 @@
 		.theme-lin-marn-bitmap {
 			background-color: rgb(216, 236, 180);
 		}
+
+		.theme-bhat-bitmap {
+			background-color: rgb(254, 243, 174);
+		}
 	</style>
 </head>
 <h1>お一人様コンソーシアム</h1>
@@ -56,6 +60,7 @@
 			<td class="theme-cirlipa" colspan="2">cirlipa</td>
 			<td class="theme-pektak" colspan="2">pektak</td>
 			<td class="theme-lin-marn-bitmap" colspan="2">lin-marn-bitmap</td>
+			<td class="theme-bhat-bitmap" colspan="2">bhat-bitmap</td>
 		</tr>
 	</thead>
 	<tbody id="foo"></tbody>
@@ -69,6 +74,11 @@
 	function from_hiragana(c, a) {
 		let hex = c.codePointAt(0).toString(16).toUpperCase();
 		return { identity: `タカン文字【${c}】`, duvuv: [`U+${hex}`, `HIRAGANA LETTER ${a}`], pektak: c };
+	}
+
+	function from_bhat(deva, bhat, name) {
+		let hex = (deva.codePointAt(0) + 65536).toString(16).slice(1).toUpperCase();
+		return { identity: `バート文字 ${bhat}`, duvuv:[`U+${hex}`, `DEVANAGARI LETTER ${name}`], bhat_bitmap: bhat};
 	}
 	var obj = [
 		{ identity: "空白", duvuv: ["U+0020", "SPACE"], cirlipa: " " },
@@ -277,7 +287,44 @@
 		from_hiragana("ゑ", "WE"),
 		from_hiragana("ん", "N"),
 		{ identity: "タカン文字長音符号", duvuv: ["U+30FC", "KATAKANA-HIRAGANA PROLONGED SOUND MARK"], pektak: "ー" },
-
+		{ identity: "バート文字 s", duvuv: ["U+095B", "DEVANAGARI LETTER ZA"], bhat_bitmap: "s" },
+		{ identity: "バート文字 gh", duvuv: ["U+095A", "DEVANAGARI LETTER GHHA"], bhat_bitmap: "gh" },
+		{ identity: "バート文字 ḷ", duvuv: ["U+0933", "DEVANAGARI LETTER LLA"], bhat_bitmap: "ḷ" },
+		{ identity: "バート文字 h", duvuv: ["U+0959", "DEVANAGARI LETTER KHHA"], bhat_bitmap: "h" },
+		{ identity: "バート文字 y", duvuv: ["U+095F", "DEVANAGARI LETTER YYA"], bhat_bitmap: "y" },
+		{ identity: "バート文字 a", duvuv:["U+0905", "DEVANAGARI LETTER A"], bhat_bitmap: "a"},
+		{ identity: "バート文字 á", duvuv:["U+0906", "DEVANAGARI LETTER AA"], bhat_bitmap:"á"},
+		{ identity: "バート文字 i", duvuv:["U+0907", "DEVANAGARI LETTER I"], bhat_bitmap: "i"},
+		{ identity: "バート文字 í", duvuv:["U+0908", "DEVANAGARI LETTER II"], bhat_bitmap:"í"},
+		{ identity: "バート文字 u", duvuv:["U+0909", "DEVANAGARI LETTER U"], bhat_bitmap: "u"},
+		{ identity: "バート文字 ú", duvuv:["U+090A", "DEVANAGARI LETTER UU"], bhat_bitmap:"ú"},
+		{ identity: "バート文字 e", duvuv:["U+090F", "DEVANAGARI LETTER E"], bhat_bitmap: "e"},
+		{ identity: "バート文字 ai", duvuv:["U+0910", "DEVANAGARI LETTER AI"], bhat_bitmap:"ai"},
+		{ identity: "バート文字 o", duvuv:["U+0913", "DEVANAGARI LETTER O"], bhat_bitmap: "o"},
+		{ identity: "バート文字 au", duvuv:["U+0914", "DEVANAGARI LETTER AU"], bhat_bitmap:"au"},
+		from_bhat("क", "k", "KA"), 
+		from_bhat("ख", "kh", "KHA"),
+		from_bhat("ग", "g", "GA"), 
+		from_bhat("च", "z", "CA"), 
+		from_bhat("य", "j", "YA"), 
+		from_bhat("श", "x", "SHA"), 
+		from_bhat("ट", "ṭ", "TTA"), 
+		from_bhat("ड", "ḍ", "DDA"), 
+		from_bhat("ण", "ṇ", "NNA"), 
+		from_bhat("र", "r", "RA"), 
+		from_bhat("ष", "ṣ", "SSA"), 
+		from_bhat("त", "t", "TA"), 
+		from_bhat("द", "d", "DA"), 
+		from_bhat("ध", "dh", "DHA"),
+		from_bhat("न", "n", "NA"), 
+		from_bhat("ल", "l", "LA"), 
+		from_bhat("स", "c", "SA"), 
+		from_bhat("प", "p", "PA"), 
+		from_bhat("फ", "ph", "PHA"),
+		from_bhat("ब", "b", "BA"), 
+		from_bhat("भ", "bh", "BHA"),
+		from_bhat("म", "m", "MA"), 
+		from_bhat("व", "w", "VA"), 
 	];
 
 	obj.sort((a, b) => a.duvuv[0] < b.duvuv[0] ? -1 : a.duvuv[0] > b.duvuv[0] ? 1 : 0);
@@ -295,6 +342,8 @@
 				<td class="theme-pektak" style="font-family: pek_tak; font-size: 300%"><span style="background-color: white">${(obj[i].pektak ?? "").split("").join("<br>")}</span></td>
 				<td class="theme-lin-marn-bitmap" style="font-weight: bold">${obj[i].linmarn_bitmap ?? ""}</td>
 				<td class="theme-lin-marn-bitmap" style="font-family: lin-marn-bitmap; font-size: 300%"><span style="background-color: white">${obj[i].linmarn_bitmap ?? ""}</span></td>
+				<td class="theme-bhat-bitmap" style="font-weight: bold">${obj[i].bhat_bitmap ?? ""}</td>
+				<td class="theme-bhat-bitmap">${obj[i].bhat_bitmap ? '<img src="bhat_font/bhat_' + obj[i].bhat_bitmap + '.png" height="50">' : ""}</td>
 		</tr>`;
 	}
 
