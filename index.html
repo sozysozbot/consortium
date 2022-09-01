@@ -20,6 +20,16 @@
 			src: url('lin-marn-bitmap-font.woff') format('woff');
 		}
 
+		@font-face {
+			font-family: 'duvuv-font';
+			src: url('duvuv.woff') format('woff');
+		}
+
+		@font-face {
+			font-family: "fallback";
+			src: url("UnicodeBMPFallback51.woff") format("woff");
+		}
+
 		td {
 			padding: 2px;
 			text-align: center;
@@ -49,6 +59,10 @@
 		.theme-bhat-bitmap {
 			background-color: rgb(254, 243, 174);
 		}
+
+		.theme-duvuv-font {
+			background-color: aquamarine;
+		}
 	</style>
 </head>
 <h1>お一人様コンソーシアム</h1>
@@ -61,6 +75,7 @@
 			<td class="theme-pektak" colspan="2">pektak</td>
 			<td class="theme-lin-marn-bitmap" colspan="2">lin-marn-bitmap</td>
 			<td class="theme-bhat-bitmap" colspan="2">bhat-bitmap</td>
+			<td class="theme-duvuv-font" colspan="2">duvuv-font</td>
 		</tr>
 	</thead>
 	<tbody id="foo"></tbody>
@@ -359,6 +374,8 @@
 				<td class="theme-lin-marn-bitmap" style="font-family: lin-marn-bitmap; font-size: 300%"><span style="background-color: white">${obj[i].linmarn_bitmap ?? ""}</span></td>
 				<td class="theme-bhat-bitmap" style="font-weight: bold">${obj[i].bhat_bitmap ?? ""}</td>
 				<td class="theme-bhat-bitmap">${obj[i].bhat_bitmap ? '<img src="bhat_font/bhat_' + obj[i].bhat_bitmap + '.png" height="50">' : ""}</td>
+				<td class="theme-duvuv-font" style="font-weight: bold">${String.fromCodePoint(parseInt(obj[i].duvuv[0].slice(2), 16))}</td>
+				<td class="theme-duvuv-font" style="font-family: duvuv-font, fallback; font-size: 300%"><span style="background-color: white">${String.fromCodePoint(parseInt(obj[i].duvuv[0].slice(2), 16))}</span></td>
 		</tr>`;
 	}
 
