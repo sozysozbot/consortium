@@ -5,6 +5,9 @@
 	<meta charset="utf-8">
 	<title>お一人様コンソーシアム</title>
 	<style>
+		body {
+			white-space: pre-wrap;
+		}
 		@font-face {
 			font-family: 'cirlipa';
 			src: url('cirlxarli_liparxe_1.woff') format('woff');
@@ -23,6 +26,11 @@
 		@font-face {
 			font-family: 'duvuv-font';
 			src: url('duvuv.woff') format('woff');
+		}
+
+		@font-face {
+			font-family: 'linzklar_rounded';
+			src: url('linzklar_rounded.woff') format('woff');
 		}
 
 		@font-face {
@@ -63,6 +71,10 @@
 		.theme-duvuv-font {
 			background-color: aquamarine;
 		}
+
+		.theme-linzklar-rounded {
+			background-color: antiquewhite;
+		}
 	</style>
 </head>
 <h1>お一人様コンソーシアム</h1>
@@ -75,6 +87,7 @@
 			<td class="theme-pektak" colspan="2">pektak</td>
 			<td class="theme-lin-marn-bitmap" colspan="2">lin-marn-bitmap</td>
 			<td class="theme-bhat-bitmap" colspan="2">bhat-bitmap</td>
+			<td class="theme-linzklar-rounded" colspan="2">linzklar_rounded</td>
 			<td class="theme-duvuv-font" colspan="2">duvuv-font</td>
 		</tr>
 	</thead>
@@ -86,9 +99,9 @@
 		return [`U+${hex}`, `CJK UNIFIED IDEOGRAPH-${hex}`];
 	}
 
-	function from_hiragana(c, a) {
+	function from_hiragana(c, a, linzklar_rounded) {
 		let hex = c.codePointAt(0).toString(16).toUpperCase();
-		return { identity: `タカン文字【${c}】`, duvuv: [`U+${hex}`, `HIRAGANA LETTER ${a}`], pektak: c };
+		return { identity: `タカン文字【${c}】`, duvuv: [`U+${hex}`, `HIRAGANA LETTER ${a}`], pektak: c, ...(linzklar_rounded ? {linzklar_rounded: c} : {}) };
 	}
 
 	function from_bhat(deva, bhat, name) {
@@ -96,18 +109,19 @@
 		return { identity: `バート文字 ${bhat}`, duvuv:[`U+${hex}`, `DEVANAGARI LETTER ${name}`], bhat_bitmap: bhat};
 	}
 	var obj = [
-		{ identity: "空白", duvuv: ["U+0020", "SPACE"], cirlipa: " " },
+		{ identity: "空白", duvuv: ["U+0020", "SPACE"], cirlipa: " ", linzklar_rounded: " " },
 		{ identity: "リパーシェ感嘆符", duvuv: ["U+0021", "EXCLAMATION MARK"], cirlipa: "!" },
-		{ identity: "台詞引用符\n(flandzoven xefdo)", duvuv: ["U+0022", "QUOTATION MARK"], cirlipa: "\"" },
+		{ identity: "台詞引用符\n(flandzoven xefdo)", duvuv: ["U+0022", "QUOTATION MARK"], cirlipa: "\"", linzklar_rounded: "\"" },
 		{ identity: "レジュ記号", duvuv: ["U+0024", "DOLLAR SIGN"], cirlipa: "$" },
 		{ identity: "la の合字", duvuv: ["U+0026", "AMPERSAND"], cirlipa: "&" },
 		{ identity: "伝統アポストロフィ", duvuv: ["U+0027", "APOSTROPHE"], cirlipa: "'" },
-		{ identity: "丸括弧左", duvuv: ["U+0028", "LEFT PARENTHESIS"], cirlipa: "(" },
-		{ identity: "丸括弧右", duvuv: ["U+0029", "RIGHT PARENTHESIS"], cirlipa: ")" },
+		{ identity: "丸括弧左", duvuv: ["U+0028", "LEFT PARENTHESIS"], cirlipa: "(", linzklar_rounded: "(" },
+		{ identity: "丸括弧右", duvuv: ["U+0029", "RIGHT PARENTHESIS"], cirlipa: ")", linzklar_rounded: ")" },
 		{ identity: "正数記号", duvuv: ["U+002b", "PLUS SIGN"], cirlipa: "+" },
-		{ identity: "カンマ", duvuv: ["U+002c", "COMMA"], cirlipa: ",", pektak: ";" },
-		{ identity: "ハイフン", duvuv: ["U+002d", "HYPHEN-MINUS"], cirlipa: "-", linmarn_bitmap: "-" },
-		{ identity: "ピリオド", duvuv: ["U+002e", "FULL STOP"], cirlipa: ".", pektak: ":" },
+		{ identity: "カンマ", duvuv: ["U+002c", "COMMA"], cirlipa: ",", pektak: ";", linzklar_rounded: "," },
+		{ identity: "ハイフン", duvuv: ["U+002d", "HYPHEN-MINUS"], cirlipa: "-", linmarn_bitmap: "-", linzklar_rounded: "-" },
+		{ identity: "ピリオド", duvuv: ["U+002e", "FULL STOP"], cirlipa: ".", pektak: ":", linzklar_rounded: "." },
+		{ identity: "スラッシュ\n(並列区切り)", duvuv: ["U+002f", "SOLIDUS" ], linzklar_rounded: "/" },
 		{ identity: "ユーゴック数字0", duvuv: ["U+0030", "DIGIT ZERO"], cirlipa: "0" },
 		{ identity: "ユーゴック数字1", duvuv: ["U+0031", "DIGIT ONE"], cirlipa: "1" },
 		{ identity: "ユーゴック数字2", duvuv: ["U+0032", "DIGIT TWO"], cirlipa: "2" },
@@ -118,15 +132,15 @@
 		{ identity: "ユーゴック数字7", duvuv: ["U+0037", "DIGIT SEVEN"], cirlipa: "7" },
 		{ identity: "ユーゴック数字8", duvuv: ["U+0038", "DIGIT EIGHT"], cirlipa: "8" },
 		{ identity: "ユーゴック数字9", duvuv: ["U+0039", "DIGIT NINE"], cirlipa: "9" },
-		{ identity: "コロン\n(kadlarl)", duvuv: ["U+003a", "COLON"], cirlipa: ":", linmarn_bitmap: ":" },
+		{ identity: "コロン\n(kadlarl)", duvuv: ["U+003a", "COLON"], cirlipa: ":", linmarn_bitmap: ":", linzklar_rounded: ":" },
 		{ identity: "山引用符左\n(licxaven xefdo)", duvuv: ["U+003c", "LESS-THAN SIGN"], cirlipa: "<" },
 		{ identity: "等号", duvuv: ["U+003d", "EQUALS SIGN"], cirlipa: "=" },
 		{ identity: "山引用符右\n(licxaven xefdo)", duvuv: ["U+003e", "GREATER-THAN SIGN"], cirlipa: ">" },
 		{ identity: "疑問符", duvuv: ["U+003f", "QUESTION MARK"], cirlipa: "?" },
 		{ identity: "io の合字", duvuv: ["U+0040", "COMMERCIAL AT"], cirlipa: "@" },
-		{ identity: "角括弧左", duvuv: ["U+005b", "LEFT SQUARE BRACKET"], cirlipa: "[", linmarn_bitmap: "[" },
+		{ identity: "角括弧左", duvuv: ["U+005b", "LEFT SQUARE BRACKET"], cirlipa: "[", linmarn_bitmap: "[", linzklar_rounded: "[" },
 		{ identity: "ズー記号", duvuv: ["U+005c", "REVERSE SOLIDUS"], cirlipa: "\\" },
-		{ identity: "角括弧右", duvuv: ["U+005d", "RIGHT SQUARE BRACKET"], cirlipa: "]", linmarn_bitmap: "]" },
+		{ identity: "角括弧右", duvuv: ["U+005d", "RIGHT SQUARE BRACKET"], cirlipa: "]", linmarn_bitmap: "]", linzklar_rounded: "]" },
 		{ identity: "下線", duvuv: ["U+005f", "LOW LINE"], cirlipa: "_" },
 		{ identity: "リパーシェ a", duvuv: ["U+0061", "LATIN SMALL LETTER A"], cirlipa: "a", pektak: "A", linmarn_bitmap: "A" },
 		{ identity: "リパーシェ b", duvuv: ["U+0062", "LATIN SMALL LETTER B"], cirlipa: "b", pektak: "B", linmarn_bitmap: "B" },
@@ -136,78 +150,80 @@
 		{ identity: "リパーシェ f", duvuv: ["U+0066", "LATIN SMALL LETTER F"], cirlipa: "f" },
 		{ identity: "リパーシェ g", duvuv: ["U+0067", "LATIN SMALL LETTER G"], cirlipa: "g" },
 		{ identity: "リパーシェ h", duvuv: ["U+0068", "LATIN SMALL LETTER H"], cirlipa: "h" },
-		{ identity: "リパーシェ i", duvuv: ["U+0069", "LATIN SMALL LETTER I"], cirlipa: "i", pektak: "I", linmarn_bitmap: "I" },
-		{ identity: "リパーシェ j", duvuv: ["U+006a", "LATIN SMALL LETTER J"], cirlipa: "j", pektak: "J", linmarn_bitmap: "J" },
+		{ identity: "リパーシェ i", duvuv: ["U+0069", "LATIN SMALL LETTER I"], cirlipa: "i", pektak: "I", linmarn_bitmap: "I", linzklar_rounded: "i" },
+		{ identity: "リパーシェ j", duvuv: ["U+006a", "LATIN SMALL LETTER J"], cirlipa: "j", pektak: "J", linmarn_bitmap: "J", linzklar_rounded: "j" },
 		{ identity: "リパーシェ k", duvuv: ["U+006b", "LATIN SMALL LETTER K"], cirlipa: "k" },
-		{ identity: "リパーシェ l", duvuv: ["U+006c", "LATIN SMALL LETTER L"], cirlipa: "l", pektak: "L", linmarn_bitmap: "L" },
-		{ identity: "リパーシェ m", duvuv: ["U+006d", "LATIN SMALL LETTER M"], cirlipa: "m", pektak: "M", linmarn_bitmap: "M" },
-		{ identity: "リパーシェ n", duvuv: ["U+006e", "LATIN SMALL LETTER N"], cirlipa: "n", pektak: "N", linmarn_bitmap: "N" },
-		{ identity: "リパーシェ o", duvuv: ["U+006f", "LATIN SMALL LETTER O"], cirlipa: "o", pektak: "O", linmarn_bitmap: "O" },
-		{ identity: "リパーシェ p", duvuv: ["U+0070", "LATIN SMALL LETTER P"], cirlipa: "p", pektak: "P", linmarn_bitmap: "P" },
+		{ identity: "リパーシェ l", duvuv: ["U+006c", "LATIN SMALL LETTER L"], cirlipa: "l", pektak: "L", linmarn_bitmap: "L", linzklar_rounded: "l" },
+		{ identity: "リパーシェ m", duvuv: ["U+006d", "LATIN SMALL LETTER M"], cirlipa: "m", pektak: "M", linmarn_bitmap: "M", linzklar_rounded: "m" },
+		{ identity: "リパーシェ n", duvuv: ["U+006e", "LATIN SMALL LETTER N"], cirlipa: "n", pektak: "N", linmarn_bitmap: "N", linzklar_rounded: "n" },
+		{ identity: "リパーシェ o", duvuv: ["U+006f", "LATIN SMALL LETTER O"], cirlipa: "o", pektak: "O", linmarn_bitmap: "O", linzklar_rounded: "o" },
+		{ identity: "リパーシェ p", duvuv: ["U+0070", "LATIN SMALL LETTER P"], cirlipa: "p", pektak: "P", linmarn_bitmap: "P", linzklar_rounded: "p" },
 		{ identity: "リパーシェ q", duvuv: ["U+0071", "LATIN SMALL LETTER Q"], cirlipa: "q" },
 		{ identity: "リパーシェ r\n(hrlichen rer)", duvuv: ["U+0072", "LATIN SMALL LETTER R"], cirlipa: "r" },
-		{ identity: "リパーシェ s", duvuv: ["U+0073", "LATIN SMALL LETTER S"], cirlipa: "s", pektak: "C", linmarn_bitmap: "C" },
-		{ identity: "リパーシェ t", duvuv: ["U+0074", "LATIN SMALL LETTER T"], cirlipa: "t", pektak: "T", linmarn_bitmap: "T" },
-		{ identity: "リパーシェ u", duvuv: ["U+0075", "LATIN SMALL LETTER U"], cirlipa: "u", pektak: "U", linmarn_bitmap: "U" },
+		{ identity: "リパーシェ s", duvuv: ["U+0073", "LATIN SMALL LETTER S"], cirlipa: "s", pektak: "C", linmarn_bitmap: "C", linzklar_rounded: "c" },
+		{ identity: "リパーシェ t", duvuv: ["U+0074", "LATIN SMALL LETTER T"], cirlipa: "t", pektak: "T", linmarn_bitmap: "T", linzklar_rounded: "t" },
+		{ identity: "リパーシェ u", duvuv: ["U+0075", "LATIN SMALL LETTER U"], cirlipa: "u", pektak: "U", linmarn_bitmap: "U", linzklar_rounded: "u" },
 		{ identity: "リパーシェ v", duvuv: ["U+0076", "LATIN SMALL LETTER V"], cirlipa: "v" },
-		{ identity: "リパーシェ w", duvuv: ["U+0077", "LATIN SMALL LETTER W"], cirlipa: "w", pektak: "W", linmarn_bitmap: "W" },
+		{ identity: "リパーシェ w", duvuv: ["U+0077", "LATIN SMALL LETTER W"], cirlipa: "w", pektak: "W", linmarn_bitmap: "W", linzklar_rounded: "w" },
 		{ identity: "リパーシェ x", duvuv: ["U+0078", "LATIN SMALL LETTER X"], cirlipa: "x" },
 		{ identity: "リパーシェ y", duvuv: ["U+0079", "LATIN SMALL LETTER Y"], cirlipa: "y", linmarn_bitmap: "Y" },
 		{ identity: "リパーシェ z", duvuv: ["U+007a", "LATIN SMALL LETTER Z"], cirlipa: "z" },
-		{ identity: "装飾括弧左", duvuv: ["U+007b", "LEFT CURLY BRACKET"], linmarn_bitmap: "{" },
+		{ identity: "装飾括弧左", duvuv: ["U+007b", "LEFT CURLY BRACKET"], linmarn_bitmap: "{", linzklar_rounded: "{" },
 		{ identity: "負数記号\n(正数記号の上下反転)", duvuv: ["U+007c", "VERTiCAL BAR"] },
-		{ identity: "装飾括弧右", duvuv: ["U+007d", "RIGHT CURLY BRACKET"], linmarn_bitmap: "}" },
+		{ identity: "装飾括弧右", duvuv: ["U+007d", "RIGHT CURLY BRACKET"], linmarn_bitmap: "}", linzklar_rounded: "}" },
 		{ identity: "リパーシェ vh", duvuv: ["U+03B2", "GREEK SMALL LETTER BETA"], cirlipa: "V" },
 		{ identity: "リパーシェ fh", duvuv: ["U+03C6", "GREEK SMALL LETTER PHI"], cirlipa: "F" },
-		{ identity: "ペメセペ・ルヨット d", duvuv: ["U+0434", "CYRILLIC SMALL LETTER DE"], pektak: "D" },
+		{ identity: "ペメセペ・ルヨット拡張 g", duvuv: ["U+0433", "CYRILLIC SMALL LETTER GHE"], linzklar_rounded: "g" },
+		{ identity: "ペメセペ・ルヨット d", duvuv: ["U+0434", "CYRILLIC SMALL LETTER DE"], pektak: "D", linzklar_rounded: "d" },
 		{ identity: "リパーシェ dz", duvuv: ["U+0436", "CYRILLIC SMALL LETTER ZHE"], cirlipa: "X" },
-		{ identity: "ペメセペ・ルヨット k", duvuv: ["U+043A", "CYRILLIC SMALL LETTER KA"], pektak: "K", linmarn_bitmap: "K" },
-		{ identity: "ペメセペ・ルヨット z", duvuv: ["U+0446", "CYRILLIC SMALL LETTER TSE"], pektak: "Z", linmarn_bitmap: "Z" },
-		{ identity: "ペメセペ・ルヨット x", duvuv: ["U+0448", "CYRILLIC SMALL LETTER SHA"], pektak: "X", linmarn_bitmap: "X" },
-		{ identity: "燐字【上】", duvuv: from_cjk("上"), pektak: "+", linmarn_bitmap: "上" },
-		{ identity: "燐字【下】", duvuv: from_cjk("下"), pektak: "-", linmarn_bitmap: "下" },
-		{ identity: "燐字【銭】", duvuv: from_cjk("銭"), pektak: "$", linmarn_bitmap: "銭" },
+		{ identity: "ペメセペ・ルヨット k", duvuv: ["U+043A", "CYRILLIC SMALL LETTER KA"], pektak: "K", linmarn_bitmap: "K", linzklar_rounded: "k" },
+		{ identity: "ペメセペ・ルヨット z", duvuv: ["U+0446", "CYRILLIC SMALL LETTER TSE"], pektak: "Z", linmarn_bitmap: "Z", linzklar_rounded: "z" },
+		{ identity: "ペメセペ・ルヨット x", duvuv: ["U+0448", "CYRILLIC SMALL LETTER SHA"], pektak: "X", linmarn_bitmap: "X", linzklar_rounded: "x" },
+		{ identity: "燐字【上】", duvuv: from_cjk("上"), pektak: "+", linmarn_bitmap: "上", linzklar_rounded: "上" },
+		{ identity: "燐字【下】", duvuv: from_cjk("下"), pektak: "-", linmarn_bitmap: "下", linzklar_rounded: "下" },
+		{ identity: "燐字【銭】", duvuv: from_cjk("銭"), pektak: "$", linmarn_bitmap: "銭", linzklar_rounded: "銭" },
 
-		{ identity: "燐字【船】", duvuv: from_cjk("船"), pektak: "船", linmarn_bitmap: "船" },
-		{ identity: "燐字【兵】", duvuv: from_cjk("兵"), pektak: "兵", linmarn_bitmap: "兵" },
-		{ identity: "燐字【弓】", duvuv: from_cjk("弓"), pektak: "弓", linmarn_bitmap: "弓" },
-		{ identity: "燐字【車】", duvuv: from_cjk("車"), pektak: "車", linmarn_bitmap: "車" },
-		{ identity: "燐字【虎】", duvuv: from_cjk("虎"), pektak: "虎", linmarn_bitmap: "虎" },
-		{ identity: "燐字【馬】", duvuv: from_cjk("馬"), pektak: "馬", linmarn_bitmap: "馬" },
-		{ identity: "燐字【筆】", duvuv: from_cjk("筆"), pektak: "筆", linmarn_bitmap: "筆" },
-		{ identity: "燐字【巫】", duvuv: from_cjk("巫"), pektak: "巫", linmarn_bitmap: "巫" },
-		{ identity: "燐字【将】", duvuv: from_cjk("将"), pektak: "将", linmarn_bitmap: "将" },
-		{ identity: "燐字【王】", duvuv: from_cjk("王"), pektak: "王", linmarn_bitmap: "王" },
+		{ identity: "燐字【船】", duvuv: from_cjk("船"), pektak: "船", linmarn_bitmap: "船", linzklar_rounded: "船" },
+		{ identity: "燐字【兵】", duvuv: from_cjk("兵"), pektak: "兵", linmarn_bitmap: "兵", linzklar_rounded: "兵" },
+		{ identity: "燐字【弓】", duvuv: from_cjk("弓"), pektak: "弓", linmarn_bitmap: "弓", linzklar_rounded: "弓" },
+		{ identity: "燐字【車】", duvuv: from_cjk("車"), pektak: "車", linmarn_bitmap: "車", linzklar_rounded: "車" },
+		{ identity: "燐字【虎】", duvuv: from_cjk("虎"), pektak: "虎", linmarn_bitmap: "虎", linzklar_rounded: "虎" },
+		{ identity: "燐字【馬】", duvuv: from_cjk("馬"), pektak: "馬", linmarn_bitmap: "馬", linzklar_rounded: "馬" },
+		{ identity: "燐字【筆】", duvuv: from_cjk("筆"), pektak: "筆", linmarn_bitmap: "筆", linzklar_rounded: "筆" },
+		{ identity: "燐字【巫】", duvuv: from_cjk("巫"), pektak: "巫", linmarn_bitmap: "巫", linzklar_rounded: "巫" },
+		{ identity: "燐字【将】", duvuv: from_cjk("将"), pektak: "将", linmarn_bitmap: "将", linzklar_rounded: "将" },
+		{ identity: "燐字【王】", duvuv: from_cjk("王"), pektak: "王", linmarn_bitmap: "王", linzklar_rounded: "王" },
 
-		{ identity: "燐字【無】", duvuv: from_cjk("無"), pektak: "0無", linmarn_bitmap: "無" },
-		{ identity: "燐字【一】", duvuv: from_cjk("一"), pektak: "1", linmarn_bitmap: "一" },
-		{ identity: "燐字【二】", duvuv: from_cjk("二"), pektak: "2", linmarn_bitmap: "二" },
-		{ identity: "燐字【三】", duvuv: from_cjk("三"), pektak: "3", linmarn_bitmap: "三" },
-		{ identity: "燐字【四】", duvuv: from_cjk("四"), pektak: "4", linmarn_bitmap: "四" },
-		{ identity: "燐字【五】", duvuv: from_cjk("五"), pektak: "5", linmarn_bitmap: "五" },
-		{ identity: "燐字【六】", duvuv: from_cjk("六"), pektak: "6", linmarn_bitmap: "六" },
-		{ identity: "燐字【七】", duvuv: from_cjk("七"), pektak: "7", linmarn_bitmap: "七" },
-		{ identity: "燐字【八】", duvuv: from_cjk("八"), pektak: "8", linmarn_bitmap: "八" },
-		{ identity: "燐字【九】", duvuv: from_cjk("九"), pektak: "9", linmarn_bitmap: "九" },
+		{ identity: "燐字【無】", duvuv: from_cjk("無"), pektak: "0無", linmarn_bitmap: "無", linzklar_rounded: "無" },
+		{ identity: "燐字【一】", duvuv: from_cjk("一"), pektak: "1", linmarn_bitmap: "一", linzklar_rounded: "一" },
+		{ identity: "燐字【二】", duvuv: from_cjk("二"), pektak: "2", linmarn_bitmap: "二", linzklar_rounded: "二" },
+		{ identity: "燐字【三】", duvuv: from_cjk("三"), pektak: "3", linmarn_bitmap: "三", linzklar_rounded: "三" },
+		{ identity: "燐字【四】", duvuv: from_cjk("四"), pektak: "4", linmarn_bitmap: "四", linzklar_rounded: "四" },
+		{ identity: "燐字【五】", duvuv: from_cjk("五"), pektak: "5", linmarn_bitmap: "五", linzklar_rounded: "五" },
+		{ identity: "燐字【六】", duvuv: from_cjk("六"), pektak: "6", linmarn_bitmap: "六", linzklar_rounded: "六" },
+		{ identity: "燐字【七】", duvuv: from_cjk("七"), pektak: "7", linmarn_bitmap: "七", linzklar_rounded: "七" },
+		{ identity: "燐字【八】", duvuv: from_cjk("八"), pektak: "8", linmarn_bitmap: "八", linzklar_rounded: "八" },
+		{ identity: "燐字【九】", duvuv: from_cjk("九"), pektak: "9", linmarn_bitmap: "九", linzklar_rounded: "九" },
 
-		{ identity: "燐字【皇】", duvuv: from_cjk("皇"), pektak: "_", linmarn_bitmap: "皇" },
+		{ identity: "燐字【皇】", duvuv: from_cjk("皇"), pektak: "_", linmarn_bitmap: "皇", linzklar_rounded: "皇" },
 
-		{ identity: "半角燐数字 0", duvuv: ["U+3007", "IDEOGRAPHIC NUMBER ZERO"], linmarn_bitmap: "0"},
-		{ identity: "半角燐数字 1", duvuv: ["U+3021", "HANGZHOU NUMERAL ONE"], linmarn_bitmap: "1"},
-		{ identity: "半角燐数字 2", duvuv: ["U+3022", "HANGZHOU NUMERAL TWO"], linmarn_bitmap: "2"},
-		{ identity: "半角燐数字 3", duvuv: ["U+3023", "HANGZHOU NUMERAL THREE"], linmarn_bitmap: "3"},
-		{ identity: "半角燐数字 4", duvuv: ["U+3024", "HANGZHOU NUMERAL FOUR"], linmarn_bitmap: "4"},
-		{ identity: "半角燐数字 5", duvuv: ["U+3025", "HANGZHOU NUMERAL FIVE"], linmarn_bitmap: "5"},
-		{ identity: "半角燐数字 6", duvuv: ["U+3026", "HANGZHOU NUMERAL SIX"], linmarn_bitmap: "6"},
-		{ identity: "半角燐数字 7", duvuv: ["U+3027", "HANGZHOU NUMERAL SEVEN"], linmarn_bitmap: "7"},
-		{ identity: "半角燐数字 8", duvuv: ["U+3028", "HANGZHOU NUMERAL EIGHT"], linmarn_bitmap: "8"},
-		{ identity: "半角燐数字 9", duvuv: ["U+3029", "HANGZHOU NUMERAL NINE"], linmarn_bitmap: "9"},
+		{ identity: "半角燐数字 0", duvuv: ["U+3007", "IDEOGRAPHIC NUMBER ZERO"], linmarn_bitmap: "0", linzklar_rounded: "0"},
+		{ identity: "半角燐数字 1", duvuv: ["U+3021", "HANGZHOU NUMERAL ONE"], linmarn_bitmap: "1", linzklar_rounded: "1"},
+		{ identity: "半角燐数字 2", duvuv: ["U+3022", "HANGZHOU NUMERAL TWO"], linmarn_bitmap: "2", linzklar_rounded: "2"},
+		{ identity: "半角燐数字 3", duvuv: ["U+3023", "HANGZHOU NUMERAL THREE"], linmarn_bitmap: "3", linzklar_rounded: "3"},
+		{ identity: "半角燐数字 4", duvuv: ["U+3024", "HANGZHOU NUMERAL FOUR"], linmarn_bitmap: "4", linzklar_rounded: "4"},
+		{ identity: "半角燐数字 5", duvuv: ["U+3025", "HANGZHOU NUMERAL FIVE"], linmarn_bitmap: "5", linzklar_rounded: "5"},
+		{ identity: "半角燐数字 6", duvuv: ["U+3026", "HANGZHOU NUMERAL SIX"], linmarn_bitmap: "6", linzklar_rounded: "6"},
+		{ identity: "半角燐数字 7", duvuv: ["U+3027", "HANGZHOU NUMERAL SEVEN"], linmarn_bitmap: "7", linzklar_rounded: "7"},
+		{ identity: "半角燐数字 8", duvuv: ["U+3028", "HANGZHOU NUMERAL EIGHT"], linmarn_bitmap: "8", linzklar_rounded: "8"},
+		{ identity: "半角燐数字 9", duvuv: ["U+3029", "HANGZHOU NUMERAL NINE"], linmarn_bitmap: "9", linzklar_rounded: "9"},
 		
-		{ identity: "燐字圏二重引用符", duvuv: ["U+FF02", "FULLWIDTH QUOTATION MARK"], pektak: "\"" },
-		{ identity: "燐字圏繰り返し記号", duvuv: ["U+3005", "IDEOGRAPHIC ITERATION MARK"], pektak: "'" },
-		{ identity: "燐字圏句読点", duvuv: ["U+3002", "IDEOGRAPHIC FULL STOP"], pektak: ",." },
-		{ identity: "燐字圏感嘆符", duvuv: ["U+FF01", "FULLWIDTH EXCLAMATION MARK"], pektak: "!" },
-		{ identity: "燐字圏疑問符", duvuv: ["U+FF1F", "FULLWIDTH QUESTION MARK"], pektak: "?" },
+		{ identity: "燐字圏二重引用符", duvuv: ["U+FF02", "FULLWIDTH QUOTATION MARK"], pektak: "\"", linzklar_rounded: "「」" },
+		{ identity: "燐字間隔", duvuv: ["U+3000", "IDEOGRAPHIC SPACE"], linzklar_rounded: "　" },
+		{ identity: "燐字圏繰り返し記号", duvuv: ["U+3005", "IDEOGRAPHIC ITERATION MARK"], pektak: "'", linzklar_rounded: "々" },
+		{ identity: "燐字圏句読点", duvuv: ["U+3002", "IDEOGRAPHIC FULL STOP"], pektak: ",.", linzklar_rounded: "。" },
+		{ identity: "燐字圏感嘆符", duvuv: ["U+FF01", "FULLWIDTH EXCLAMATION MARK"], pektak: "!", linzklar_rounded: "!！" },
+		{ identity: "燐字圏疑問符", duvuv: ["U+FF1F", "FULLWIDTH QUESTION MARK"], pektak: "?", linzklar_rounded: "?？" },
 		{ identity: "単立パイグ文字 a", duvuv: ["U+FF41", "FULLWIDTH LATIN SMALL LETTER A"], pektak: "a" },
 		{ identity: "単立パイグ文字 b", duvuv: ["U+FF42", "FULLWIDTH LATIN SMALL LETTER B"], pektak: "b" },
 		{ identity: "単立パイグ文字 c", duvuv: ["U+FF43", "FULLWIDTH LATIN SMALL LETTER C"], pektak: "c" },
@@ -228,25 +244,25 @@
 		{ identity: "単立パイグ文字 x", duvuv: ["U+FF58", "FULLWIDTH LATIN SMALL LETTER X"], pektak: "x" },
 		{ identity: "単立パイグ文字 y", duvuv: ["U+FF59", "FULLWIDTH LATIN SMALL LETTER Y"], pektak: "y" },
 		{ identity: "単立パイグ文字 z", duvuv: ["U+FF5A", "FULLWIDTH LATIN SMALL LETTER Z"], pektak: "z" },
-		from_hiragana("ぁ", "SMALL A"),
-		from_hiragana("あ", "A"),
-		from_hiragana("ぃ", "SMALL I"),
-		from_hiragana("い", "I"),
-		from_hiragana("ぅ", "SMALL U"),
-		from_hiragana("う", "U"),
-		from_hiragana("ぇ", "SMALL E"),
-		from_hiragana("え", "E"),
-		from_hiragana("ぉ", "SMALL O"),
-		from_hiragana("お", "O"),
-		from_hiragana("か", "KA"),
+		from_hiragana("ぁ", "SMALL A", true),
+		from_hiragana("あ", "A", true),
+		from_hiragana("ぃ", "SMALL I", true),
+		from_hiragana("い", "I", true),
+		from_hiragana("ぅ", "SMALL U", true),
+		from_hiragana("う", "U", true),
+		from_hiragana("ぇ", "SMALL E", true),
+		from_hiragana("え", "E", true),
+		from_hiragana("ぉ", "SMALL O", true),
+		from_hiragana("お", "O", true),
+		from_hiragana("か", "KA", true),
 		from_hiragana("が", "GA"),
-		from_hiragana("き", "KI"),
+		from_hiragana("き", "KI", true),
 		from_hiragana("ぎ", "GI"),
-		from_hiragana("く", "KU"),
+		from_hiragana("く", "KU", true),
 		from_hiragana("ぐ", "GU"),
-		from_hiragana("け", "KE"),
+		from_hiragana("け", "KE", true),
 		from_hiragana("げ", "GE"),
-		from_hiragana("こ", "KO"),
+		from_hiragana("こ", "KO", true),
 		from_hiragana("ご", "GO"),
 		from_hiragana("さ", "SA"),
 		from_hiragana("ざ", "ZA"),
@@ -374,6 +390,8 @@
 				<td class="theme-lin-marn-bitmap" style="font-family: lin-marn-bitmap; font-size: 300%"><span style="background-color: white">${obj[i].linmarn_bitmap ?? ""}</span></td>
 				<td class="theme-bhat-bitmap" style="font-weight: bold">${obj[i].bhat_bitmap ?? ""}</td>
 				<td class="theme-bhat-bitmap">${obj[i].bhat_bitmap ? '<img src="bhat_font/bhat_' + obj[i].bhat_bitmap + '.png" height="50">' : ""}</td>
+				<td class="theme-linzklar-rounded" style="font-weight: bold">${(obj[i].linzklar_rounded ?? "").split("").join("<br>")}</td>
+				<td class="theme-linzklar-rounded" style="font-family: linzklar_rounded; font-size: 300%"><span style="background-color: white">${(obj[i].linzklar_rounded ?? "").split("").join("<br>")}</span></td>
 				<td class="theme-duvuv-font" style="font-weight: bold">${String.fromCodePoint(parseInt(obj[i].duvuv[0].slice(2), 16))}</td>
 				<td class="theme-duvuv-font" style="font-family: duvuv-font, fallback; font-size: 300%"><span style="background-color: white">${String.fromCodePoint(parseInt(obj[i].duvuv[0].slice(2), 16))}</span></td>
 		</tr>`;
