@@ -84,7 +84,9 @@
 <table>
 	<tr><td>U+0000 - U+04FF</td><td>リパーシェとペメセペ・ルヨット</td></tr>
 	<tr><td>U+0500 - U+08FF</td><td>（未使用）</td></tr>
-	<tr><td>U+0900 - U+2FFF</td><td>バート</td></tr>
+	<tr><td>U+0900 - U+10FF</td><td>バート</td></tr>
+	<tr><td>U+1100 - U+1FFF</td><td>（未使用）</td></tr>
+	<tr><td>U+2000 - U+2FFF</td><td>バート句読点・燐字圏諸符号</td></tr>
 	<tr><td>U+3000 - U+FFFF</td><td>パイグ・タカンなど燐字圏</td></tr>
 </table>
 <p>という構成になっている。</p>
@@ -112,9 +114,9 @@
 		return [`U+${hex}`, `CJK UNIFIED IDEOGRAPH-${hex}`];
 	}
 
-	function from_hiragana(c, a, linzklar_rounded) {
+	function from_hiragana(c, a) {
 		let hex = c.codePointAt(0).toString(16).toUpperCase();
-		return { identity: `タカン文字【${c}】`, duvuv: [`U+${hex}`, `HIRAGANA LETTER ${a}`], pektak: c, ...(linzklar_rounded ? {linzklar_rounded: c} : {}) };
+		return { identity: `タカン文字【${c}】`, duvuv: [`U+${hex}`, `HIRAGANA LETTER ${a}`], pektak: c, linzklar_rounded: c };
 	}
 
 	function from_bhat(deva, bhat, name) {
@@ -189,6 +191,7 @@
 		{ identity: "ペメセペ・ルヨット拡張 g", duvuv: ["U+0433", "CYRILLIC SMALL LETTER GHE"], linzklar_rounded: "g" },
 		{ identity: "ペメセペ・ルヨット d", duvuv: ["U+0434", "CYRILLIC SMALL LETTER DE"], pektak: "D", linzklar_rounded: "d" },
 		{ identity: "リパーシェ dz", duvuv: ["U+0436", "CYRILLIC SMALL LETTER ZHE"], cirlipa: "X" },
+		{ identity: "ペメセペ・ルヨット拡張 s", duvuv: ["U+0437", "CYRILLIC SMALL LETTER ZE"], linzklar_rounded: "s" },
 		{ identity: "ペメセペ・ルヨット k", duvuv: ["U+043A", "CYRILLIC SMALL LETTER KA"], pektak: "K", linmarn_bitmap: "K", linzklar_rounded: "k" },
 		{ identity: "ペメセペ・ルヨット z", duvuv: ["U+0446", "CYRILLIC SMALL LETTER TSE"], pektak: "Z", linmarn_bitmap: "Z", linzklar_rounded: "z" },
 		{ identity: "ペメセペ・ルヨット x", duvuv: ["U+0448", "CYRILLIC SMALL LETTER SHA"], pektak: "X", linmarn_bitmap: "X", linzklar_rounded: "x" },
@@ -233,7 +236,7 @@
 		
 		{ identity: "燐字圏二重引用符", duvuv: ["U+FF02", "FULLWIDTH QUOTATION MARK"], pektak: "\"", linzklar_rounded: "「」" },
 		{ identity: "燐字間隔", duvuv: ["U+3000", "IDEOGRAPHIC SPACE"], linzklar_rounded: "　" },
-		{ identity: "燐字圏繰り返し記号", duvuv: ["U+3005", "IDEOGRAPHIC ITERATION MARK"], pektak: "'", linzklar_rounded: "々" },
+		{ identity: "燐字圏繰り返し記号", duvuv: ["U+3005", "IDEOGRAPHIC ITERATION MARK"], pektak: "'", linzklar_rounded: "々ゝ" },
 		{ identity: "燐字圏句読点", duvuv: ["U+3002", "IDEOGRAPHIC FULL STOP"], pektak: ",.", linzklar_rounded: "。" },
 		{ identity: "燐字圏感嘆符（全角幅）", duvuv: ["U+FF01", "FULLWIDTH EXCLAMATION MARK"], pektak: "!", linzklar_rounded: "！" },
 		{ identity: "燐字圏感嘆符（半角幅）", duvuv: ["U+FE57", "SMALL EXCLAMATION MARK"], linzklar_rounded: "!" },
@@ -259,25 +262,25 @@
 		{ identity: "単立パイグ文字 x", duvuv: ["U+FF58", "FULLWIDTH LATIN SMALL LETTER X"], pektak: "x" },
 		{ identity: "単立パイグ文字 y", duvuv: ["U+FF59", "FULLWIDTH LATIN SMALL LETTER Y"], pektak: "y" },
 		{ identity: "単立パイグ文字 z", duvuv: ["U+FF5A", "FULLWIDTH LATIN SMALL LETTER Z"], pektak: "z" },
-		from_hiragana("ぁ", "SMALL A", true),
-		from_hiragana("あ", "A", true),
-		from_hiragana("ぃ", "SMALL I", true),
-		from_hiragana("い", "I", true),
-		from_hiragana("ぅ", "SMALL U", true),
-		from_hiragana("う", "U", true),
-		from_hiragana("ぇ", "SMALL E", true),
-		from_hiragana("え", "E", true),
-		from_hiragana("ぉ", "SMALL O", true),
-		from_hiragana("お", "O", true),
-		from_hiragana("か", "KA", true),
+		from_hiragana("ぁ", "SMALL A"),
+		from_hiragana("あ", "A"),
+		from_hiragana("ぃ", "SMALL I"),
+		from_hiragana("い", "I"),
+		from_hiragana("ぅ", "SMALL U"),
+		from_hiragana("う", "U"),
+		from_hiragana("ぇ", "SMALL E"),
+		from_hiragana("え", "E"),
+		from_hiragana("ぉ", "SMALL O"),
+		from_hiragana("お", "O"),
+		from_hiragana("か", "KA"),
 		from_hiragana("が", "GA"),
-		from_hiragana("き", "KI", true),
+		from_hiragana("き", "KI"),
 		from_hiragana("ぎ", "GI"),
-		from_hiragana("く", "KU", true),
+		from_hiragana("く", "KU"),
 		from_hiragana("ぐ", "GU"),
-		from_hiragana("け", "KE", true),
+		from_hiragana("け", "KE"),
 		from_hiragana("げ", "GE"),
-		from_hiragana("こ", "KO", true),
+		from_hiragana("こ", "KO"),
 		from_hiragana("ご", "GO"),
 		from_hiragana("さ", "SA"),
 		from_hiragana("ざ", "ZA"),
@@ -332,7 +335,7 @@
 		from_hiragana("ゐ", "WI"),
 		from_hiragana("ゑ", "WE"),
 		from_hiragana("ん", "N"),
-		{ identity: "タカン文字長音符号", duvuv: ["U+30FC", "KATAKANA-HIRAGANA PROLONGED SOUND MARK"], pektak: "ー" },
+		{ identity: "タカン文字長音符号", duvuv: ["U+30FC", "KATAKANA-HIRAGANA PROLONGED SOUND MARK"], pektak: "ー", linzklar_rounded: "ー" },
 		{ identity: "バート文字 s", duvuv: ["U+095B", "DEVANAGARI LETTER ZA"], bhat_bitmap: "s" },
 		{ identity: "バート文字 gh", duvuv: ["U+095A", "DEVANAGARI LETTER GHHA"], bhat_bitmap: "gh" },
 		{ identity: "バート文字 ḷ", duvuv: ["U+0933", "DEVANAGARI LETTER LLA"], bhat_bitmap: "ḷ" },
@@ -385,6 +388,7 @@
 		{ identity: "バート文字段落記号", duvuv:["U+10FB", "GEORGIAN PARAGRAPH SEPARATOR"], bhat_bitmap:"paragraph"},
 		{ identity: "バート文字二重引用符", duvuv:["U+2836", "BRAILLE PATTERN DOTS-2356"], bhat_bitmap:"2quot"},
 		{ identity: "バート文字三重引用符", duvuv:["U+283F", "BRAILLE PATTERN DOTS-123456"], bhat_bitmap:"3quot"},
+		{ identity: "半角燐数字 100", duvuv:["U+216D", "ROMAN NUMERAL ONE HUNDRED"], linzklar_rounded: "Ⅽ"},
 		 
 	];
 
